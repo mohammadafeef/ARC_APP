@@ -2,6 +2,7 @@ package com.example.arcmember;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,7 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
-    int Cversion = 1;
+    int Cversion = 2;
     private DatabaseReference databaseReference2;
     private DatabaseReference databaseReference;
     @Override

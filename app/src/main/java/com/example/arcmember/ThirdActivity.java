@@ -125,10 +125,14 @@ public class ThirdActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
-                        int value = dataSnapshot.getValue(Integer.class);
+                        String value = dataSnapshot.getValue(String.class);
+
+
+                        // Update the value in Firebase
+                        switchesRef.child(String.valueOf(buttonNumber)).setValue(value);
 
                         // Update the button color based on the new value
-                        if (value == 1) {
+                        if (value.equals("ON")) {
                             button.setBackgroundColor(Color.GREEN);
                         } else {
                             button.setBackgroundColor(Color.GRAY);
@@ -149,16 +153,21 @@ public class ThirdActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
-                            int value = dataSnapshot.getValue(Integer.class);
-                            int newValue = (value == 0) ? 1 : 0;
+                            String value = dataSnapshot.getValue(String.class);
+                            String newValue;
+                            if(value.equals("ON"))
+                                newValue = "OFF";
+                            else
+                                newValue = "ON";
+
 
                             // Update the value in Firebase
                             switchesRef.child(String.valueOf(buttonNumber)).setValue(newValue);
 
                             // Update the button color based on the new value
-                            if (newValue == 1) {
+                            if (newValue == "ON") {
                                 button.setBackgroundColor(Color.GREEN);
-                            } else {
+                            } else if (newValue == "OFF"){
                                 button.setBackgroundColor(Color.GRAY);
                             }
                         }
