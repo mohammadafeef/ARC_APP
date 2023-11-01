@@ -19,8 +19,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
-    int Cversion = 2;
-    private DatabaseReference databaseReference2;
     private DatabaseReference databaseReference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,29 +27,10 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences saved = getSharedPreferences("login", MODE_PRIVATE);
         String Username = saved.getString("Username","");
         String Password = saved.getString("Password","");
-        databaseReference2 = FirebaseDatabase.getInstance().getReference().child("version");
-        databaseReference2.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    int version = dataSnapshot.getValue(Integer.class);
-                    if(Cversion!=version){
-                        Intent intent = new Intent(MainActivity.this, versionfail.class);
-                        intent.putExtra("version",Cversion);
-                        // Start the second activity
-                        startActivity(intent);
-                        finish();
-                    }
-                    else if (!Username.isEmpty() && !Password.isEmpty()) {
-                        login(Username, Password);
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(MainActivity.this, "Connectivity issue", Toast.LENGTH_SHORT).show();
-            }
-        });
+        if (!Username.isEmpty() && !Password.isEmpty()) {
+            login(Username, Password);
+        }
+
     }
     public void submit(View view) {
         EditText username = findViewById(R.id.editTextText);
@@ -66,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void login(String Username, String Password){
         TextView feedback = findViewById(R.id.textView);
+
         databaseReference = FirebaseDatabase.getInstance().getReference().child("access/"+Username+"/password");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -89,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else
                     feedback.setText("Invalid username");
-
             }
 
             @Override
@@ -97,5 +76,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Connectivity issue", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 }

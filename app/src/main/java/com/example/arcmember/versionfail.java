@@ -29,7 +29,7 @@ public class versionfail extends AppCompatActivity {
                 if (dataSnapshot.exists()) {
                     int version = dataSnapshot.getValue(Integer.class);
                     if(Cversion==version){
-                        Intent intent = new Intent(versionfail.this, MainActivity.class);
+                        Intent intent = new Intent(versionfail.this, splash.class);
                         // Start the second activity
                         startActivity(intent);
                         finish();
